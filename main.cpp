@@ -17,6 +17,29 @@
 //
 // The optimal way to get the most money in one night is to rob the first and the third houses for a total of 2.
 //
+int houseRobber_short(std::vector<int> nums) {
+    
+    if (nums.empty())
+        return 0;
+    if(nums.size() == 1)
+        return nums[0];
+    if(nums.size() == 2)
+        return std::max(nums[0], nums[1]);
+    
+    std::vector<int>::size_type nums_count = nums.size();
+
+    std::vector<int > v(nums_count, 0);
+    v[0] = nums[0];
+    v[1] = nums[1];
+    v[2] = nums[0] + nums[2];
+    
+    for(int i = 3; i < nums_count; ++i) {
+        v[i] = std::max(v[i-2], v[i-3]) + nums[i];
+    }
+
+    return std::max(v[nums_count-1], v[nums_count - 2]);
+}
+
 int houseRobber(std::vector<int> nums) {
     
     if (nums.empty())
